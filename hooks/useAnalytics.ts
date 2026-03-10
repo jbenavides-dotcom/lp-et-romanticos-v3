@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const EVENT_PREFIX = 'romanticos__';
+const EVENT_PREFIX = 'escapadas__';
 
 function trackEvent(eventName: string, params?: Record<string, unknown>) {
   if (typeof window !== 'undefined' && window.gtag) {

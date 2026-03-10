@@ -8,6 +8,8 @@ import type {
   PerfectForItem,
   DistancePoint,
   PrivacyPoint,
+  PriceCard,
+  Review,
 } from './types';
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
@@ -33,40 +35,39 @@ export const ASSETS = {
 
 // ─── Contact & CTAs ───────────────────────────────────────────────────────────
 export const WHATSAPP_URL =
-  'https://wa.me/573189565617?text=Hola%2C%20quiero%20información%20sobre%20las%20cabañas%20románticas';
+  'https://wa.me/573189565617?text=Hola%2C%20quiero%20informacion%20sobre%20escapadas%20romanticas';
 export const CLOUDBEDS_URL = 'https://hotels.cloudbeds.com/es/reservation/yB0fEt?ga_sess_id=885637364.1682640000&currency=cop';
-export const EMAIL = 'reservas@lapalmayeltucan.com';
+export const EMAIL = 'reservations@lapalmayeltucan.com';
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 export const NAV_LINKS: NavLink[] = [
   { label: 'Cabañas', href: '#cabanas' },
-  { label: 'Experiencia', href: '#experiencias' },
+  { label: 'Experiencias', href: '#experiencias' },
+  { label: 'Precios', href: '#precios' },
   { label: 'Preguntas', href: '#faq' },
   { label: 'Reservar', href: '#reservar' },
 ];
 
 // ─── Stats Bar ────────────────────────────────────────────────────────────────
 export const STATS: Stat[] = [
-  {
-    value: '90 min',
-    label: 'Desde Bogotá',
-    sublabel: 'Acceso fácil en carro',
-  },
-  {
-    value: '100%',
-    label: 'Privado',
-    sublabel: 'Hotel boutique con pocas cabañas',
-  },
-  {
-    value: 'Todas',
-    label: 'Con tina privada',
-    sublabel: 'Baño en madera natural',
-  },
-  {
-    value: '☕',
-    label: 'Desayuno incluido',
-    sublabel: 'Artesanal cada mañana',
-  },
+  { value: '9.5/10', label: 'Booking', sublabel: 'Calificación de huéspedes' },
+  { value: '5.0/5', label: 'TripAdvisor', sublabel: '#1 en Zipacón' },
+  { value: '90 min', label: 'Desde Bogotá', sublabel: 'Acceso fácil en carro' },
+  { value: '10', label: 'Cabañas privadas', sublabel: 'Independientes con tina' },
+];
+
+// ─── Why Cards ────────────────────────────────────────────────────────────────
+export interface WhyCard {
+  title: string;
+  description: string;
+  iconName: string;
+}
+
+export const WHY_CARDS: WhyCard[] = [
+  { title: 'Privacidad Total', description: '10 cabañas independientes. Tu espacio, tu ritmo, tu silencio.', iconName: 'Shield' },
+  { title: 'Naturaleza Inmersiva', description: 'Bosque de niebla, senderos entre cafetales, aves exóticas a metros de tu cabaña.', iconName: 'Trees' },
+  { title: 'Coffee Tour Incluido', description: 'Recorre la finca que produjo el café récord ($303/lb). Incluido en tu estadía.', iconName: 'Coffee' },
+  { title: 'Farm-to-Table', description: 'Desayuno con ingredientes de la finca, café de especialidad recién tostado cada mañana.', iconName: 'UtensilsCrossed' },
 ];
 
 // ─── Search Tags ──────────────────────────────────────────────────────────────
@@ -83,12 +84,12 @@ export const SEARCH_TAGS: SearchTag[] = [
 
 // ─── Cabin Features ───────────────────────────────────────────────────────────
 export const CABIN_FEATURES: CabinFeature[] = [
-  { text: 'Cabaña privada en medio del cafetal' },
-  { text: 'Desayuno artesanal preparado con productos frescos' },
-  { text: 'Coffee Tour guiado por nuestra finca' },
-  { text: 'Degustación de cafés de especialidad' },
-  { text: 'Senderos naturales en bosque de niebla' },
-  { text: 'Espacios comunes íntimos y rodeados de naturaleza' },
+  { text: 'Tina privada en cada cabaña' },
+  { text: 'Terraza con vista al valle' },
+  { text: 'Ducha al aire libre' },
+  { text: 'Malla catamarán suspendida' },
+  { text: 'WiFi de alta velocidad' },
+  { text: 'Chimenea (cabañas select)' },
 ];
 
 export const PERFECT_FOR: PerfectForItem[] = [
@@ -100,36 +101,42 @@ export const PERFECT_FOR: PerfectForItem[] = [
 
 // ─── Experiences ──────────────────────────────────────────────────────────────
 export const EXPERIENCES: Experience[] = [
+  { icon: 'Coffee', title: 'Coffee Tour', description: 'Recorre la finca cafetera y aprende del grano al pocillo.' },
+  { icon: 'Mountain', title: 'Senderismo', description: 'Caminos entre bosque de niebla y cafetales.' },
+  { icon: 'Bird', title: 'Avistamiento de Aves', description: '+150 especies documentadas en la finca.' },
+  { icon: 'Heart', title: 'Yoga & Bienestar', description: 'Sesiones al amanecer con vista a las montañas.' },
+  { icon: 'Wine', title: 'Degustación de Café', description: 'Cata profesional de microlotes de especialidad.' },
+  { icon: 'Flame', title: 'Fogata Nocturna', description: 'Termina el día bajo las estrellas con chocolate caliente.' },
+];
+
+// ─── Price Cards ──────────────────────────────────────────────────────────────
+export const PRICE_CARDS: PriceCard[] = [
   {
-    icon: '🍳',
-    title: 'Desayuno artesanal incluido',
-    description: 'Preparado con productos frescos de la finca cada mañana.',
+    name: 'Entre Semana', price: 'Desde $450.000/noche',
+    description: 'Cabaña privada con tina, desayuno farm-to-table, coffee tour, WiFi, parqueadero',
+    includes: ['Cabaña privada con tina', 'Desayuno farm-to-table', 'Coffee tour por la finca', 'WiFi de alta velocidad', 'Parqueadero privado'],
   },
   {
-    icon: '☕',
-    title: 'Coffee Tour guiado',
-    description: 'Conoce el proceso detrás de uno de los mejores cafés del mundo.',
+    name: 'Fin de Semana', price: 'Desde $550.000/noche',
+    description: 'Todo lo de entre semana + check-out flexible',
+    includes: ['Cabaña privada con tina', 'Desayuno farm-to-table', 'Coffee tour por la finca', 'WiFi de alta velocidad', 'Parqueadero privado', 'Check-out flexible'],
+    highlighted: true,
   },
   {
-    icon: '☕',
-    title: 'Degustación de cafés de especialidad',
-    description: 'Prueba nuestras variedades Gesha, Sidra y más.',
+    name: 'Experiencia Completa', price: 'Desde $750.000/noche',
+    description: 'Todo incluido: cabaña premium, cena romántica, masaje en pareja, cata de café',
+    includes: ['Cabaña premium con tina', 'Desayuno farm-to-table', 'Coffee tour por la finca', 'Cena romántica', 'Masaje en pareja', 'Cata de café de especialidad', 'WiFi + parqueadero', 'Check-out flexible'],
   },
-  {
-    icon: '🌿',
-    title: 'Senderos naturales',
-    description: 'Caminatas por el bosque de niebla a 1.800 metros sobre el nivel del mar.',
-  },
-  {
-    icon: '🚵',
-    title: 'Pistas de mountain bike',
-    description: 'Recorre la finca en bicicleta entre los cafetales.',
-  },
-  {
-    icon: '🤫',
-    title: 'Silencio y desconexión total',
-    description: 'Sin ruido, sin ciudad. Solo naturaleza, tu pareja y tú.',
-  },
+];
+
+// ─── Reviews ──────────────────────────────────────────────────────────────────
+export const REVIEWS: Review[] = [
+  { text: 'Un paraíso a solo 1.5 horas de Bogotá. Las cabañas son increíbles, la tina con vista al valle es un sueño. El desayuno con productos de la finca fue lo mejor.', author: 'Pareja · Bogotá · 2025', rating: 5, source: 'Booking' },
+  { text: 'Uno de los mejores hoteles en los que nos hemos hospedado. La atención de Lina y Diego es excepcional, se nota que aman lo que hacen.', author: 'Pareja · Medellín · 2025', rating: 5, source: 'TripAdvisor' },
+  { text: '100 de 100. Literalmente todo es perfecto. La cabaña, el silencio, el café recién tostado cada mañana. Ya reservamos para volver.', author: 'Pareja · Bogotá · 2024', rating: 5, source: 'Booking' },
+  { text: 'Nos encantó absolutamente todo. Acogedor, relajante, emocionante y hermoso al mismo tiempo. El coffee tour fue la cereza del pastel.', author: 'Pareja · Cali · 2025', rating: 5, source: 'TripAdvisor' },
+  { text: 'Buscábamos una escapada romántica cerca de Bogotá y encontramos mucho más. La finca es mágica, las aves, el bosque de niebla... inolvidable.', author: 'Pareja · Bogotá · 2024', rating: 5, source: 'Booking' },
+  { text: 'La ducha al aire libre y la malla catamarán suspendida son experiencias únicas. Despertamos con el sonido de los pájaros y el olor del café.', author: 'Pareja · Bucaramanga · 2025', rating: 5, source: 'Booking' },
 ];
 
 // ─── Distance & Privacy ───────────────────────────────────────────────────────
@@ -149,34 +156,14 @@ export const PRIVACY_POINTS: PrivacyPoint[] = [
 
 // ─── FAQ Items ────────────────────────────────────────────────────────────────
 export const FAQ_ITEMS: FaqItem[] = [
-  {
-    question: '¿Cuál es el mejor plan romántico cerca de Bogotá?',
-    answer:
-      'La Palma & El Tucán, en Zipacón, Cundinamarca, es una de las mejores opciones. A solo 90 minutos en carro, ofrece cabañas privadas en una finca cafetera #14 del mundo según Taste Atlas 2025. Incluye desayuno artesanal, Coffee Tour guiado y senderos en bosque de niebla a 1.800 metros de altitud.',
-  },
-  {
-    question: '¿Qué incluye la estadía?',
-    answer:
-      'Cabaña privada con baño privado y terraza, desayuno artesanal con productos frescos de la finca, Coffee Tour guiado, degustación de cafés de especialidad (Gesha, Sidra, Mokka) y acceso a senderos en bosque de niebla.',
-  },
-  {
-    question: '¿A cuánto está desde Bogotá?',
-    answer:
-      'A 90 minutos en carro. Ruta sencilla: Bogotá → Facatativá → Zipacón. Sin vías difíciles ni necesidad de 4x4.',
-  },
-  {
-    question: '¿Por qué La Palma & El Tucán es reconocida mundialmente?',
-    answer:
-      'Está clasificada #14 en el ranking mundial Taste Atlas 2025 de los mejores cafés del mundo. Cultiva variedades como Gesha, Sidra y Mokka. Su barista Sebastián Villamizar ganó el II Campeonato Colombiano de Cafés Filtrados en 2017. Su programa "Vecinos y Cultivos" apoya a pequeños productores locales de Cundinamarca.',
-  },
-  {
-    question: '¿Las cabañas tienen baño privado?',
-    answer:
-      'Sí. Todas las cabañas cuentan con baño privado y están diseñadas para ofrecer privacidad y comodidad en medio de la naturaleza. Son independientes, en madera natural, con terraza y vistas al cafetal o bosque de niebla.',
-  },
-  {
-    question: '¿Cómo hacer una reserva?',
-    answer:
-      'Puedes verificar disponibilidad en nuestra plataforma de reservas en línea o escribirnos por WhatsApp. El equipo responde en minutos y confirma al instante.',
-  },
+  { question: '¿El desayuno está incluido?', answer: 'Sí. Todos nuestros planes incluyen desayuno farm-to-table preparado con ingredientes frescos de la finca. Café de especialidad ilimitado.' },
+  { question: '¿Aceptan mascotas?', answer: 'Actualmente no aceptamos mascotas para garantizar la tranquilidad de todos los huéspedes y la fauna local.' },
+  { question: '¿A cuánto queda de Bogotá?', answer: 'La Palma y el Tucán está a 90 minutos de Bogotá por la vía Facatativá-Anolaima. Carretera pavimentada con los últimos 10 minutos en vía destapada en buen estado.' },
+  { question: '¿Cuál es la mejor época para visitar?', answer: 'Cualquier época es ideal. El clima es templado todo el año (18-24°C). Para avistamiento de aves, los meses de marzo a mayo y octubre a noviembre son especialmente buenos.' },
+  { question: '¿Las cabañas tienen tina privada?', answer: 'Sí. Todas nuestras cabañas cuentan con tina privada, además de ducha al aire libre y terraza con vista al valle.' },
+  { question: '¿Qué incluye la estadía?', answer: 'Incluye cabaña privada, desayuno farm-to-table, coffee tour por la finca, WiFi, parqueadero y acceso a senderos. Experiencias adicionales como masajes y cenas románticas tienen costo extra.' },
+  { question: '¿Se puede hacer coffee tour?', answer: 'Sí, el coffee tour está incluido en todas las estadías. Recorrerás la finca que produjo el café récord mundial ($303/lb en subasta) y aprenderás todo el proceso del grano al pocillo.' },
+  { question: '¿Tienen WiFi?', answer: 'Sí, todas las cabañas y áreas comunes cuentan con WiFi de alta velocidad.' },
+  { question: '¿Hay parqueadero?', answer: 'Sí, parqueadero gratuito y privado dentro de la finca.' },
+  { question: '¿Puedo llegar en transporte público?', answer: 'Es posible pero no recomendado. Desde Bogotá hay buses a Anolaima desde el Terminal del Sur, pero los últimos kilómetros requieren taxi o transporte privado. Recomendamos vehículo propio o servicio de transporte que podemos coordinar.' },
 ];

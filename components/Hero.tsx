@@ -1,27 +1,33 @@
 import { ChevronDown } from 'lucide-react';
-import { ASSETS, CLOUDBEDS_URL, WHATSAPP_URL } from '../constants';
+import { ASSETS, WHATSAPP_URL } from '../constants';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 const TRUST_CHIPS = [
   'Cabañas privadas',
   'Tina privada',
-  'Coffee Tour',
-  'Bosque de niebla',
+  'Coffee Tour incluido',
+  'Booking 9.5/10',
 ];
 
 export default function Hero() {
-  const { trackAvailabilityClick, trackWhatsAppClick } = useAnalytics();
+  const { trackWhatsAppClick } = useAnalytics();
 
   const handleScrollDown = () => {
-    const next = document.querySelector('#busqueda');
+    const next = document.querySelector('#por-que');
     if (next) next.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToPrecios = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const target = document.querySelector('#precios');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      aria-label="Inicio — Cabañas privadas La Palma & El Tucán"
+      aria-label="Inicio — Escapada Romántica La Palma & El Tucán"
     >
       {/* Background video */}
       <div className="absolute inset-0 z-0">
@@ -50,21 +56,14 @@ export default function Hero() {
         </div>
 
         {/* H1 */}
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-4">
-          Escapadas en pareja en una{' '}
-          <span className="text-brand-gold italic">finca cafetera</span>{' '}
-          de clase mundial
+        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+          Tu Escapada Romántica a{' '}
+          <span className="text-brand-gold italic">90 Minutos de Bogotá</span>
         </h1>
 
-        {/* H2 italic */}
-        <h2 className="font-serif text-xl sm:text-2xl italic text-brand-beige mb-6 font-light">
-          Finca cafetera · Zipacón, Cundinamarca · A 90 minutos de Bogotá
-        </h2>
-
-        {/* Subheadline */}
+        {/* Subtitle */}
         <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-          Escápate a un hotel boutique inmerso en una finca cafetera reconocida mundialmente.
-          Un lugar pensado para bajar el ritmo, respirar profundo y volver a conversar sin afán.
+          Cabañas privadas en bosque de niebla · Tina · Coffee Tour incluido · Booking 9.5/10
         </p>
 
         {/* Trust chips */}
@@ -96,22 +95,20 @@ export default function Hero() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href={CLOUDBEDS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackAvailabilityClick('hero')}
-            className="w-full sm:w-auto bg-brand-pink text-white px-8 py-4 rounded-full text-base font-bold hover:bg-brand-pink/90 transition-all duration-200 hover:shadow-xl hover:shadow-brand-pink/40 hover:-translate-y-1 text-center"
-          >
-            Ver disponibilidad
-          </a>
-          <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackWhatsAppClick('hero')}
-            className="w-full sm:w-auto flex items-center justify-center bg-brand-pink text-white px-8 py-4 rounded-full text-base font-bold hover:bg-brand-pink/90 transition-all duration-200 hover:shadow-xl hover:shadow-brand-pink/40 hover:-translate-y-1"
+            className="w-full sm:w-auto bg-brand-pink text-white px-8 py-4 rounded-full text-base font-bold hover:bg-brand-pink/90 transition-all duration-200 hover:shadow-xl hover:shadow-brand-pink/40 hover:-translate-y-1 text-center"
           >
-            Reservar ahora
+            Reservar por WhatsApp
+          </a>
+          <a
+            href="#precios"
+            onClick={handleScrollToPrecios}
+            className="w-full sm:w-auto flex items-center justify-center border-2 border-white/40 text-white px-8 py-4 rounded-full text-base font-bold hover:bg-white/10 transition-all duration-200 hover:-translate-y-1"
+          >
+            Ver planes y precios
           </a>
         </div>
       </div>
