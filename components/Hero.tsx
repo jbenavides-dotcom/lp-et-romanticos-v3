@@ -56,7 +56,7 @@ export default function Hero() {
         </div>
 
         {/* H1 */}
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+        <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl text-white leading-tight mb-6">
           Tu Escapada Romántica a{' '}
           <span className="text-brand-gold italic">90 Minutos de Bogotá</span>
         </h1>

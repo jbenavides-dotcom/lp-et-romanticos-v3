@@ -96,7 +96,7 @@ function StatsBar() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {STATS.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-serif text-3xl sm:text-4xl font-bold text-brand-gold mb-1">
+              <div className="font-serif text-4xl sm:text-5xl text-brand-gold mb-1">
                 {stat.value}
               </div>
               <div className="text-white font-semibold text-sm sm:text-base mb-0.5">
@@ -128,7 +128,7 @@ function WhySection() {
           </p>
           <h2
             id="por-que-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark mb-4"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark mb-4"
           >
             ¿Por qué La Palma y el Tucán?
           </h2>
@@ -182,7 +182,7 @@ function CabinSection() {
           </p>
           <h2
             id="cabanas-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Tu cabaña privada en el bosque
           </h2>
@@ -262,7 +262,7 @@ function ExperiencesSection() {
           </p>
           <h2
             id="experiencias-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-white"
+            className="font-serif text-4xl sm:text-5xl text-white"
           >
             Más que una estadía, una experiencia
           </h2>
@@ -312,7 +312,7 @@ function PriceSection() {
           </p>
           <h2
             id="precios-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark mb-3"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark mb-3"
           >
             Planes y Precios
           </h2>
@@ -418,7 +418,7 @@ function ReviewsSection() {
           </p>
           <h2
             id="resenas-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Lo que dicen nuestras parejas
           </h2>
@@ -514,7 +514,7 @@ function FaqSection() {
           </p>
           <h2
             id="faq-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Preguntas Frecuentes
           </h2>
@@ -579,7 +579,7 @@ function DistanceSection() {
           </p>
           <h2
             id="distancia-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Cerca de Bogotá. Lejos del ruido.
           </h2>
@@ -674,7 +674,7 @@ function LocationSection() {
           </p>
           <h2
             id="ubicacion-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             ¿Cómo llegar?
           </h2>
@@ -772,7 +772,7 @@ function BookingStepsSection() {
           </p>
           <h2
             id="pasos-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Reserva en 3 simples pasos
           </h2>
@@ -845,7 +845,7 @@ function CtaFinal() {
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2
           id="cta-titulo"
-          className="font-serif text-4xl sm:text-5xl font-bold text-white mb-4"
+          className="font-serif text-5xl sm:text-6xl text-white mb-4"
         >
           El tiempo juntos no se pospone
         </h2>
