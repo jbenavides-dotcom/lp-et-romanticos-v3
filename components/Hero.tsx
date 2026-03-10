@@ -50,7 +50,7 @@ export default function Hero() {
         </div>
 
         {/* H1 */}
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-4">
           Escapadas en pareja en una{' '}
           <span className="text-brand-gold italic">finca cafetera</span>{' '}
           de clase mundial

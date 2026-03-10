@@ -81,7 +81,7 @@ function StatsBar() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {STATS.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-serif text-3xl sm:text-4xl font-bold text-brand-gold mb-1">
+              <div className="font-serif text-4xl sm:text-5xl text-brand-gold mb-1">
                 {stat.value}
               </div>
               <div className="text-white font-semibold text-sm sm:text-base mb-0.5">
@@ -131,7 +131,7 @@ function SearchSection() {
             </p>
             <h2
               id="busqueda-titulo"
-              className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark mb-5"
+              className="font-serif text-4xl sm:text-5xl text-brand-dark mb-5"
             >
               Si estás buscando esto, estás en el lugar correcto.
             </h2>
@@ -198,7 +198,7 @@ function CabinSection() {
           </p>
           <h2
             id="cabanas-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark mb-3"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark mb-3"
           >
             Cada cabaña es independiente y está construida en madera natural, en armonía con el entorno
           </h2>
@@ -340,7 +340,7 @@ function ExperiencesSection() {
           </p>
           <h2
             id="experiencias-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark mb-3"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark mb-3"
           >
             No es solo hospedaje. Es toda una experiencia.
           </h2>
@@ -377,7 +377,7 @@ function ExperiencesSection() {
               <p className="text-brand-gold font-semibold text-sm uppercase tracking-widest mb-3">
                 Hotel boutique en una finca de clase mundial
               </p>
-              <p className="font-serif text-white text-xl font-bold leading-snug mb-3">
+              <p className="font-serif text-white text-xl leading-snug mb-3">
                 La Palma &amp; El Tucán no es un hotel tradicional.
               </p>
               <p className="text-white/80 text-sm leading-relaxed mb-2">
@@ -457,7 +457,7 @@ function ReviewsSection() {
           </p>
           <h2
             id="resenas-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Lo que dicen nuestras parejas
           </h2>
@@ -539,7 +539,7 @@ function DistanceSection() {
           </p>
           <h2
             id="ubicacion-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Cerca de Bogotá. Lejos del ruido.
           </h2>
@@ -659,7 +659,7 @@ function UrgencySection() {
 
         <h2
           id="urgencia-titulo"
-          className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
+          className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white mb-6 leading-tight"
         >
           Los fines de semana{' '}
           <span className="text-brand-pink italic">suelen llenarse con anticipación</span>
@@ -727,7 +727,7 @@ function FaqSection() {
           </p>
           <h2
             id="faq-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
+            className="font-serif text-4xl sm:text-5xl text-brand-dark"
           >
             Preguntas frecuentes
           </h2>
@@ -797,7 +797,7 @@ function BookingStepsSection() {
           <p className="text-brand-pink font-semibold tracking-widest uppercase text-sm mb-3">
             Fácil y rápido
           </p>
-          <h2 id="pasos-titulo" className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">
+          <h2 id="pasos-titulo" className="font-serif text-4xl sm:text-5xl text-brand-dark">
             Reserva en 3 simples pasos
           </h2>
         </div>
@@ -867,7 +867,7 @@ function CtaFinal() {
 
         <h2
           id="cta-titulo"
-          className="font-serif text-4xl sm:text-5xl font-bold text-white mb-4"
+          className="font-serif text-4xl sm:text-5xl text-white mb-4"
         >
           Reserva en 2 minutos
         </h2>
