@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ChevronDown, ChevronUp, MapPin, Clock, Mountain, Wifi } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ChevronDown, ChevronUp, ChevronLeft, ChevronRight, MapPin, Clock, Mountain, Wifi, Star, MessageCircle, CalendarDays, CheckCircle } from 'lucide-react';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -26,19 +26,50 @@ import {
 // ─── WhatsApp floating button ─────────────────────────────────────────────────
 function FloatingCTA() {
   const { trackWhatsAppClick } = useAnalytics();
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 4000);
+    }, 30000);
+
+    const initial = setTimeout(() => {
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 4000);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(initial);
+    };
+  }, []);
+
   return (
-    <a
-      href={WHATSAPP_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => trackWhatsAppClick('floating_button')}
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-brand-pink text-white shadow-lg hover:bg-brand-pink/90 hover:shadow-xl hover:shadow-brand-pink/40 hover:-translate-y-1 transition-all duration-300"
-      aria-label="Contáctanos"
-    >
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-    </a>
+    <div className="fixed bottom-6 right-6 z-50 flex items-end gap-3">
+      <div
+        className={`bg-white text-brand-dark text-sm font-medium px-4 py-2.5 rounded-2xl rounded-br-sm shadow-lg border border-brand-beige/50 whitespace-nowrap transition-all duration-300 ${
+          showTooltip
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-2 pointer-events-none'
+        }`}
+      >
+        Pregunta por reservas 💬
+      </div>
+
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackWhatsAppClick('floating_button')}
+        className="flex items-center justify-center w-14 h-14 rounded-full bg-brand-pink text-white shadow-lg hover:bg-brand-pink/90 hover:shadow-xl hover:shadow-brand-pink/40 hover:-translate-y-1 transition-all duration-300"
+        aria-label="Contáctanos"
+      >
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+      </a>
+    </div>
   );
 }
 
@@ -366,82 +397,124 @@ function ExperiencesSection() {
 // ─── Reviews Section ──────────────────────────────────────────────────────────
 function ReviewsSection() {
   const { ref, isVisible } = useScrollReveal();
+  const [page, setPage] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const REVIEWS = [
     {
       text: 'Una experiencia que no esperaba encontrar tan cerca de la ciudad. Las cabañas son acogedoras, el silencio es real y el Coffee Tour fue lo mejor del viaje. Volvimos al mes siguiente.',
       author: 'Visitante desde Bogotá',
-      stars: 5,
+      rating: 5,
+      source: 'Google',
     },
     {
       text: 'Llegamos por nuestro aniversario y fue mucho mejor de lo que imaginamos. Desayuno delicioso, cabaña íntima, atardecer espectacular. El tipo de lugar al que uno quiere volver.',
       author: 'Pareja de aniversario',
-      stars: 5,
+      rating: 5,
+      source: 'Google',
     },
     {
       text: 'Sabía que La Palma & El Tucán era conocida por el café, pero no imaginé que el hospedaje fuera tan especial. La combinación de naturaleza, arquitectura en madera y el café de especialidad lo hace único en Colombia.',
       author: 'Viajero de Medellín',
-      stars: 5,
+      rating: 5,
+      source: 'Google',
     },
     {
       text: 'Ya es la tercera vez que venimos. El bosque de niebla, el silencio y el desayuno artesanal son razones suficientes para repetir. Un refugio real a 90 minutos de Bogotá.',
       author: 'Huésped recurrente',
-      stars: 5,
+      rating: 5,
+      source: 'Google',
     },
   ];
+
+  const perPage = typeof window !== 'undefined' && window.innerWidth < 640 ? 1 : 3;
+  const totalPages = Math.ceil(REVIEWS.length / perPage);
+
+  const goTo = (p: number, pause = true) => {
+    if (pause) setIsPaused(true);
+    setPage(((p % totalPages) + totalPages) % totalPages);
+  };
+
+  useEffect(() => {
+    if (isPaused) return;
+    timerRef.current = setTimeout(() => goTo(page + 1, false), 5000);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [page, isPaused]);
+
+  const visible = REVIEWS.slice(page * perPage, page * perPage + perPage);
 
   return (
     <section
       ref={ref}
-      className={`py-20 bg-brand-dark scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}
+      className={`py-20 bg-white scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}
       aria-labelledby="resenas-titulo"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-14">
-          <p className="text-brand-gold font-semibold tracking-widest uppercase text-sm mb-3">
-            Lo que dicen nuestros huéspedes
+          <p className="text-brand-pink font-semibold tracking-widest uppercase text-sm mb-3">
+            Reseñas reales
           </p>
           <h2
             id="resenas-titulo"
-            className="font-serif text-3xl sm:text-4xl font-bold text-white"
+            className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark"
           >
-            Experiencias reales
+            Lo que dicen nuestras parejas
           </h2>
-          {/* Aggregate rating */}
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <svg key={i} className="w-5 h-5 text-brand-gold" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
-            </div>
-            <span className="text-white font-bold text-lg">5.0</span>
-            <span className="text-white/50 text-sm">/ 5</span>
-          </div>
         </div>
 
-        {/* Reviews grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {REVIEWS.map((review, i) => (
-            <article
+        <div className="relative flex items-center gap-4">
+          <button
+            onClick={() => goTo(page - 1)}
+            aria-label="Reseñas anteriores"
+            className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-brand-beige bg-white shadow-sm flex items-center justify-center text-brand-dark hover:border-brand-pink hover:text-brand-pink transition-all duration-200"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6" aria-live="polite">
+            {visible.map((review, i) => (
+              <article
+                key={`${page}-${i}`}
+                className="bg-brand-light border border-brand-beige/50 rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300"
+              >
+                <div className="flex gap-0.5">
+                  {[...Array(review.rating)].map((_, j) => (
+                    <Star key={j} className="w-4 h-4 text-brand-gold fill-brand-gold" />
+                  ))}
+                </div>
+                <p className="text-brand-dark text-sm leading-relaxed flex-1 italic">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <span>{review.author}</span>
+                  <span className="font-medium">{review.source}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <button
+            onClick={() => goTo(page + 1)}
+            aria-label="Siguientes reseñas"
+            className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-brand-beige bg-white shadow-sm flex items-center justify-center text-brand-dark hover:border-brand-pink hover:text-brand-pink transition-all duration-200"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="flex justify-center gap-2 mt-8">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
               key={i}
-              className="bg-white/8 backdrop-blur-sm border border-white/10 rounded-2xl p-6 flex flex-col gap-4 hover:bg-white/12 transition-colors duration-200"
-            >
-              {/* Stars */}
-              <div className="flex gap-0.5">
-                {[...Array(review.stars)].map((_, j) => (
-                  <svg key={j} className="w-4 h-4 text-brand-gold" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              {/* Quote */}
-              <p className="text-white/80 text-sm leading-relaxed flex-1 italic">
-                "{review.text}"
-              </p>
-            </article>
+              aria-label={`Página ${i + 1}`}
+              onClick={() => goTo(i)}
+              className={`rounded-full transition-all duration-300 ${
+                i === page
+                  ? 'w-6 h-2.5 bg-brand-pink'
+                  : 'w-2.5 h-2.5 bg-brand-beige hover:bg-brand-pink/40'
+              }`}
+            />
           ))}
         </div>
       </div>
@@ -704,6 +777,58 @@ function FaqSection() {
   );
 }
 
+// ─── Booking Steps Section ────────────────────────────────────────────────────
+function BookingStepsSection() {
+  const { ref, isVisible } = useScrollReveal();
+  const steps = [
+    { icon: MessageCircle, title: 'Escríbenos por WhatsApp', description: 'Cuéntanos tus fechas y preferencias' },
+    { icon: CalendarDays, title: 'Confirma tus fechas', description: 'Te enviamos disponibilidad y opciones' },
+    { icon: CheckCircle, title: '¡Listo, nos vemos!', description: 'Recibe confirmación y detalles de llegada' },
+  ] as const;
+
+  return (
+    <section
+      ref={ref}
+      className={`py-20 bg-brand-light scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}
+      aria-labelledby="pasos-titulo"
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="text-brand-pink font-semibold tracking-widest uppercase text-sm mb-3">
+            Fácil y rápido
+          </p>
+          <h2 id="pasos-titulo" className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">
+            Reserva en 3 simples pasos
+          </h2>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-6 relative">
+          {/* Dashed line connector (desktop only) */}
+          <div className="hidden sm:block absolute top-10 left-[20%] right-[20%] border-t-2 border-dashed border-brand-beige" aria-hidden="true" />
+
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <div key={i} className="flex flex-col items-center text-center relative z-10 flex-1">
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 rounded-full bg-white border-2 border-brand-beige shadow-sm flex items-center justify-center">
+                    <Icon className="w-8 h-8 text-brand-pink" />
+                  </div>
+                  <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-brand-pink text-white text-xs font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="font-serif text-lg font-semibold text-brand-dark mb-1">{step.title}</h3>
+                <p className="text-gray-500 text-sm">{step.description}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── CTA Final ────────────────────────────────────────────────────────────────
 function CtaFinal() {
   const { ref, isVisible } = useScrollReveal();
@@ -912,6 +1037,7 @@ export default function App() {
         <DistanceSection />
         <UrgencySection />
         <FaqSection />
+        <BookingStepsSection />
         <CtaFinal />
       </main>
       <Footer />

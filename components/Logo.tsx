@@ -3,23 +3,21 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export default function Logo({ size = 'md' }: LogoProps) {
-  const sizes = {
-    sm: 'text-sm',
-    md: 'text-base sm:text-lg',
-    lg: 'text-xl sm:text-2xl lg:text-3xl',
+const LOGO_DARK = 'https://res.cloudinary.com/dkqocgknd/image/upload/f_auto,q_auto/lpet/logo-hotel-svg.svg';
+const LOGO_LIGHT = 'https://res.cloudinary.com/dkqocgknd/image/upload/f_auto,q_auto/lpet/logo-hotel-light.svg';
+
+export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
+  const heights = {
+    sm: 'h-8',
+    md: 'h-10 sm:h-12',
+    lg: 'h-12 sm:h-14 lg:h-16',
   };
 
   return (
-    <div className="flex flex-col leading-tight">
-      <span className={`${sizes[size]} font-serif font-bold tracking-tight`}>
-        <span className="text-brand-gold">LA PALMA</span>
-        <span className="text-brand-pink mx-1">&amp;</span>
-        <span className="text-brand-gold">EL TUCÁN</span>
-      </span>
-      <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-brand-pink font-bold">
-        Escapadas Románticas
-      </span>
-    </div>
+    <img
+      src={variant === 'light' ? LOGO_LIGHT : LOGO_DARK}
+      alt="La Palma & El Tucán Hotel"
+      className={`${heights[size]} w-auto object-contain`}
+    />
   );
 }
